@@ -4,15 +4,15 @@
 #include <cassert>
 #include <cmath>
 
-#include "double_c.hpp"
+#include "ComplexD.hpp"
+using namespace std;
+#include "Matrix.hpp"
 
 int main(){
 
-    double_c z;
-    z.x = 3;
-    z.y = -1.7;
+    ComplexD z(3, -1.7);
 
-    print(z);
+    // print(z);
     
     return 0;
 }
