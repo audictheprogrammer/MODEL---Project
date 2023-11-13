@@ -4,8 +4,7 @@
 ## Everything must be implemented in C
 
 - Implement an arithmetic for complex numbers based on double-precision floating-point numbers, i.e. with real and imaginary parts.
-- Implement the FFT and inverse FFT for vectors of size 2k
-: these functions must enlarge vectors of sizes that are not powers of 2.
+- Implement the FFT and inverse FFT for vectors of size 2k: these functions must enlarge vectors of sizes that are not powers of 2.
 - Implement the naive algorithm for multiplying polynomials with integers coefficients.
 - Implement an FFT-based algorithm for multiplying polynomials with integers coefficients (see exercise in the course material).
 - Compare their efficiency.
