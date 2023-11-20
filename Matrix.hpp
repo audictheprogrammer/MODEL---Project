@@ -3,7 +3,7 @@
 
 #include "ComplexD.hpp"
 #include <vector>
-
+#include <cassert>
 
 using namespace std;
 
@@ -22,9 +22,30 @@ class Matrix{
         }
     }
 
-    // vector<ComplexD> operator *(vector<ComplexD> V){
-    //     /* Product between a matrix and a vector. */
-    // }
+    vector<ComplexD> operator *(vector<ComplexD> V){
+        /* Product between a matrix and a vector. */
+        assert(V.size() == this->nc);
+        vector<ComplexD> res(this->nr);
+        for (int i = 0; i < this->nr; i++){
+            for (int j = 0; j < this->nr; j++){
+                res[i] += this->data[i*this->nc + j] * V[j];
+            }
+        }
+
+        return res;
+    }
+
+    vector<ComplexD> operator *(ComplexD z){
+        /* Product between a matrix and a complex. */
+        for (int i = 0; i < this->nr; i++){
+            for (int j = 0; j < this->nr; j++){
+                this->data[i*this->nc + j] *= z;
+            }
+        }
+    
+    
+    }
+
 
 
 };

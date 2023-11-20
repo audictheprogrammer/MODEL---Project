@@ -21,3 +21,12 @@ This project can be done as groups of three. In that case, the names of all stud
     1. your implementations: main functions and organization of your code, explanations of parts that are not yet fully functional, difficulties that you encountered, etc,
     2. the results of your benchmarks: timings of your functions on different sizes of matrices
     3. your conclusions about the performance you have observed, and possible improvements in your code.
+
+
+
+
+// Avancee :
+
+reprendre FFT_rec 
+- modifier le tableau des new root
+- corps de boucle (eval)
