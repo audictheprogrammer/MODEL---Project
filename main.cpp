@@ -6,13 +6,80 @@
 
 #include "ComplexD.hpp"
 using namespace std;
-#include "Matrix.hpp"
+// #include "Matrix.hpp"
+#include "FFT.hpp"
 
 int main(){
 
-    ComplexD z(3, -1.7);
+    const int TEST1 = 0;
+    const int TEST2 = 1;
 
-    // print(z);
+
+    if (TEST1){
+        ComplexD z(0, 1);
+        ComplexD z2(z);
+        ComplexD z3 = z2;
+
+        // Testing +, *, +=, *=
+        cout << "z = "    << z    << endl;
+        cout << "z2 = "   << z2   << endl;
+        cout << "z3 = "   << z3   << endl;
+        cout << "z+z2 = " << z+z2 << endl;
+        cout << "z-z2 = " << z-z2 << endl;
+        cout << "z*z2 = " << z*z2 << endl;
+
+    }
+
+    if (TEST2){
+        ComplexD z1(1, 0);
+        ComplexD z2(0, 0);
+        ComplexD z3(0, 0);
+        ComplexD z4(0, 0);
+        vector<ComplexD> V = {z1, z2, z3, z4};
+
+        // ComplexD z1(0.25, 0);
+        // ComplexD z2(0.25, 0);
+        // ComplexD z3(0.25, 0);
+        // ComplexD z4(0.25, 0);
+        // vector<ComplexD> V = {z1, z2, z3, z4};
+
+        // ComplexD z0(3, 0);
+        // ComplexD z1(4, 0);
+        // ComplexD z2(6, 0);
+        // ComplexD z3(2, 0);
+        // ComplexD z4(1, 0);
+        // ComplexD z5(10, 0);
+        // vector<ComplexD> V = {z0, z1, z2, z3, z4, z5};
+
+        // ComplexD z0(3, 0);
+        // ComplexD z1(4, 0);
+        // vector<ComplexD> V = {z0, z1};
+
+
+        cout << "V:" << endl;
+        for (int i = 0; i < V.size(); i++){
+            cout << V[i] << "\t";
+        }
+        cout << endl;
+
+        cout << "Step1" << endl;
+        ComplexD root(0, 1);  // root = i
+        cout << "Step2" << endl;
+
+        vector<ComplexD> res = FFT(V);
+        cout << "Step3" << endl;
+        
+
+        cout << "FFT of V:" << endl;
+        for (int i = 0; i < res.size(); i++){
+            cout << res[i] << "\t";
+        }
+        cout << endl;
+    
+    
+    }
+
+
     
     return 0;
 }

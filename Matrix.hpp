@@ -35,16 +35,17 @@ class Matrix{
         return res;
     }
 
-    vector<ComplexD> operator *(ComplexD z){
-        /* Product between a matrix and a complex. */
-        for (int i = 0; i < this->nr; i++){
-            for (int j = 0; j < this->nr; j++){
-                this->data[i*this->nc + j] *= z;
-            }
-        }
+    // vector<ComplexD> operator *(ComplexD z){
+    //     /* Product between a matrix and a complex. */
+    //     for (int i = 0; i < this->nr; i++){
+    //         for (int j = 0; j < this->nr; j++){
+    //             this->data[i*this->nc + j] *= z;
+    //         }
+    //     }
+
     
     
-    }
+    // }
 
 
 
