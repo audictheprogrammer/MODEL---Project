@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-class ComplexD{
+class ComplexD {
 
 public:
 
@@ -128,15 +128,25 @@ public:
     }
 };
 
-ostream& operator <<(ostream& o, const ComplexD& z){
-    o << z.x << " + i* " << z.y << endl;
+ostream& operator <<(ostream& o, const ComplexD& z) {
+    o << z.x << " + i* " << z.y;
     return o;
 }
 
-ComplexD conj(ComplexD z){
+ComplexD conj(ComplexD z) {
     /* Return the conjugate of a complex number. */
     return ComplexD(z.x, -z.y);
 }
+
+std::vector<ComplexD> operator * (double d, std::vector<ComplexD>& V) {    
+    for (std::size_t i = 0; i < V.size(); ++i) {
+        V[i] = V[i] * d;
+    }
+    
+    return V;
+}
+
+
 
 
 

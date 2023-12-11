@@ -27,10 +27,6 @@ This project can be done as groups of three. In that case, the names of all stud
 
 // Avancee :
 
-
-Fin des tests arithmetiques
-FFT fonctionne avec des reels
-
-- tester avec des complexes
-- finir les fonctions arithmetiques (si on veut en ajouter)
-- Il reste IFFT (inverse FFT)
+- Produit de polynomes naif OK
+- Produit de polynomes FFT NO
+- Il reste à comparer les performances
