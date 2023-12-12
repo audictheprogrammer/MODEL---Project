@@ -30,3 +30,6 @@ This project can be done as groups of three. In that case, the names of all stud
 - Produit de polynomes naif OK
 - Produit de polynomes FFT NO
 - Il reste à comparer les performances
+
+Enzo : j'ai vérifié -> get_prim_root/get_roots/split TOUT FONCTIONNE
+il faut vérifier les autres fonction ie eval et le code en général (qu'on utilise la bonne racine/la bonne taille etc...)
