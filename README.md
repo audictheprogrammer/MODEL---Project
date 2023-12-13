@@ -28,7 +28,7 @@ This project can be done as groups of three. In that case, the names of all stud
 // Avancee :
 
 - Produit de polynomes naif OK
-- Produit de polynomes FFT NO
+- Produit de polynomes FFT OK
 - Il reste à comparer les performances
 
 Enzo : j'ai vérifié -> get_prim_root/get_roots/split TOUT FONCTIONNE
