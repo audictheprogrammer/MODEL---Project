@@ -8,7 +8,7 @@
 
 #include "ComplexD.hpp"
 
-#define tolerance 1.0E-15
+#define tolerance 1.0E-5
 
 // Primitive roots.
 ComplexD get_prim_root(size_t size_vect) {
@@ -21,7 +21,7 @@ ComplexD get_prim_root(size_t size_vect) {
 vector<ComplexD> get_roots(ComplexD root, size_t n) {
     vector<ComplexD> roots(n);
     roots[0] = ComplexD(1, 0);
-    for (int i = 1; i < n; ++i) {
+    for (std::size_t i = 1; i < n; ++i) {
         roots[i] = roots[i-1] * root;
     }
     return roots;
@@ -32,7 +32,7 @@ tuple<vector<ComplexD>, vector<ComplexD>> split(const vector<ComplexD>& P) {
     vector<ComplexD> Po(P.size()/2);
     vector<ComplexD> Pe((P.size()+1)/2);
     
-    for (size_t i = 0; i < P.size()/2; ++i) {
+    for (std::size_t i = 0; i < P.size()/2; ++i) {
         Pe[i] = P[i*2];
         Po[i] = P[i*2 + 1];
     }
@@ -49,7 +49,7 @@ ComplexD eval(const vector<ComplexD> P, ComplexD root)
 {
     ComplexD res = ComplexD();
     ComplexD omega = ComplexD(1, 0);
-    for (int i = 0; i < P.size(); ++i) {
+    for (std::size_t i = 0; i < P.size(); ++i) {
         res += P[i]*omega;
         omega *= root;
     }
@@ -76,7 +76,7 @@ vector<ComplexD> FFT_rec(const vector<ComplexD>& P, const vector<ComplexD>& root
     vector<ComplexD> FFT_Po = FFT_rec(Po, roots, step*2);
 
     // Evaluations.
-    for (int i = 0; i < P.size()/2; ++i) {
+    for (std::size_t i = 0; i < P.size()/2; ++i) {
         ComplexD root = roots[i*step]; // Omega^i
         res[i] = FFT_Pe[i] + root * FFT_Po[i];
         res[P.size()/2 + i] = FFT_Pe[i] - root * FFT_Po[i];
@@ -101,18 +101,17 @@ size_t next_power_of_two(size_t n) {
 
 vector<ComplexD> FFT(const vector<ComplexD>& P) {
     /* FFT of P. */
-    
+    // std::size_t size = next_power_of_two(P.size());
+    // std::vector<double> 
     // Get the primitive root.
     ComplexD prim_root = get_prim_root(P.size());
     // cout << "PRIM ROOT:" << prim_root << endl;
 
     // Get the list of primitive to the power from 0 to n-1.
     vector<ComplexD> roots = get_roots(prim_root, P.size());
-
-    return FFT_rec(P, roots, 1);
+    vector<ComplexD> res = FFT_rec(P, roots, 1);
+    return res;
 }
-
-
 
 vector<ComplexD> IFFT(const vector<ComplexD>& P) {
     /* IFFT of P. */

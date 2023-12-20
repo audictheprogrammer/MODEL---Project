@@ -4,7 +4,7 @@
 ## Everything must be implemented in C
 
 - Implement an arithmetic for complex numbers based on double-precision floating-point numbers, i.e. with real and imaginary parts.
-- Implement the FFT and inverse FFT for vectors of size 2k: these functions must enlarge vectors of sizes that are not powers of 2.
+- Implement the FFT and inverse FFT for vectors of size 2^k : these functions must enlarge vectors of sizes that are not powers of 2.
 - Implement the naive algorithm for multiplying polynomials with integers coefficients.
 - Implement an FFT-based algorithm for multiplying polynomials with integers coefficients (see exercise in the course material).
 - Compare their efficiency.
@@ -27,9 +27,7 @@ This project can be done as groups of three. In that case, the names of all stud
 
 // Avancee :
 
-- Produit de polynomes naif OK
-- Produit de polynomes FFT OK
-- Il reste à comparer les performances
-
-Enzo : j'ai vérifié -> get_prim_root/get_roots/split TOUT FONCTIONNE
-il faut vérifier les autres fonction ie eval et le code en général (qu'on utilise la bonne racine/la bonne taille etc...)
+- Benchmark OK
+- Jeu de test pour l'arithmétique des complexes début
+- Rapport début(FFT et IFFT)
+- Corriger FFT pour agrandir les vecteurs de taille non puissance de 2

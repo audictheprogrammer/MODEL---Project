@@ -2,7 +2,10 @@
 #define COMPLEX_H
 
 #include <iostream>
+
 using namespace std;
+
+#define tolerance 1.0E-5
 
 class ComplexD {
 
@@ -30,91 +33,138 @@ public:
     // }
 
     /* OPERATORS */
-    ComplexD operator =(const ComplexD& z) {
+    ComplexD operator = (const ComplexD& z) {
         (*this).x = z.x;
         (*this).y = z.y;
         return *this;
     }
 
-    ComplexD operator +(const ComplexD& z2) {
-        ComplexD z1 = *this;
-        return ComplexD(z1.x + z2.x, z1.y + z2.y);
+    bool operator != (const ComplexD& z) {
+        bool b = ( (abs(x-z.x) > tolerance) || (abs(y-z.y) > tolerance ) ) ? 1 : 0;
+        return b;
     }
 
-    ComplexD operator -(const ComplexD& z2) {
-        ComplexD z1 = *this;
-        return ComplexD(z1.x - z2.x, z1.y - z2.y);
+    bool operator == (const ComplexD& z) {
+        bool b = ( (abs(x-z.x) < tolerance) && (abs(y-z.y) < tolerance ) ) ? 1 : 0;
+        return b;
     }
 
-    ComplexD operator +=(const ComplexD& z2) {
-        this->x += z2.x;
-        this->y += z2.y;
+    ComplexD operator + (const ComplexD& z2) {
+        ComplexD z = ComplexD();
+        z.x = (abs(x + z2.x) < tolerance) ? 0 : x + z2.x;
+        z.y = (abs(y + z2.y) < tolerance) ? 0 : y + z2.y;
+        return z;
+    }
+    
+
+    ComplexD operator - (const ComplexD& z2) {
+        ComplexD z = ComplexD();
+        z.x = (abs(x - z2.x) < tolerance) ? 0 : x - z2.x;
+        z.y = (abs(y - z2.y) < tolerance) ? 0 : y - z2.y;
+        return z;
+    }
+
+    ComplexD operator += (const ComplexD& z2) {
+        this->x = (abs(x + z2.x) < tolerance) ? 0 : x + z2.x;
+        this->y = (abs(y + z2.y) < tolerance) ? 0 : y + z2.y;
         return *this;
     }
 
-    ComplexD operator -=(const ComplexD& z2) {
-        this->x -= z2.x;
-        this->y -= z2.y;
+    ComplexD operator -= (const ComplexD& z2) {
+        this->x = (abs(x - z2.x) < tolerance) ? 0 : x - z2.x;
+        this->y = (abs(y - z2.y) < tolerance) ? 0 : y - z2.y;
         return *this;
     }
 
-    ComplexD operator +(const double& d) {
-        ComplexD z = *this;
-        return ComplexD(z.x + d, z.y);
+    ComplexD operator + (const double& d) {
+        ComplexD z = ComplexD();
+        z.x = (abs(x + d) < tolerance) ? 0 : x + d;
+        z.y = y;
+        return z;
     }
 
-    ComplexD operator -(const double& d) {
-        ComplexD z = *this;
-        return ComplexD(z.x - d, z.y);
+    ComplexD operator - (const double& d) {
+        ComplexD z = ComplexD();
+        z.x = (abs(x - d) < tolerance) ? 0 : x - d;
+        z.y = y;
+        return z;
     }
 
-    ComplexD operator +=(const double& d) {
-        this->x += d;
+    ComplexD operator += (const double& d) {
+        this->x = (abs(x + d) < tolerance) ? 0 : x + d;
         return *this;
     }
 
-    ComplexD operator -=(const double& d) {
-        this->x -= d;
+    ComplexD operator -= (const double& d) {
+        this->x = (abs(x - d) < tolerance) ? 0 : x - d;
         return *this;
     }
 
     ComplexD operator *(const ComplexD& z2) {
         ComplexD z1 = *this;
-        return ComplexD(z1.x * z2.x - z1.y * z2.y, z1.y*z2.x + z2.y*z1.x);
+        double v1 = z1.x * z2.x - z1.y * z2.y;
+        double v2 = z1.y * z2.x + z2.y * z1.x;
+        return ComplexD((abs(v1) < tolerance) ? 0 : v1, 
+                        (abs(v2) < tolerance) ? 0 : v2);
     }
 
     ComplexD operator *(const ComplexD& z2) const {
         ComplexD z1 = *this;
-        return ComplexD(z1.x * z2.x - z1.y * z2.y, z1.y*z2.x + z2.y*z1.x);
+        double v1 = z1.x * z2.x - z1.y * z2.y;
+        double v2 = z1.y * z2.x + z2.y * z1.x;
+        return ComplexD((abs(v1) < tolerance) ? 0 : v1, 
+                        (abs(v2) < tolerance) ? 0 : v2);
     }
 
 
     ComplexD operator *=(const ComplexD& z2) {
         double tmp = this->x;
-        this->x = this->x * z2.x - this->y * z2.y;
-        this->y = tmp * z2.y + this->y * z2.x;
+        double v1 = this->x * z2.x - this->y * z2.y;
+        double v2 = tmp * z2.y + this->y * z2.x;
+        this->x = (abs(v1) < tolerance) ? 0 : v1;
+        this->y = (abs(v2) < tolerance) ? 0 : v2;
         return *this;
 
         // (a+ib) * (x+iy) = ax -by + i[ay + bx]
     }
     
     ComplexD operator *(const double& d) {
-        return ComplexD(d*this->x, d*this->y);
-    }
+        double v1 = d*this->x;
+        double v2 = d*this->y;
+        return ComplexD((abs(v1) < tolerance) ? 0 : v1, 
+                        (abs(v2) < tolerance) ? 0 : v2);
+        }
         
     ComplexD operator *=(const double& d) {
-        this->x *= d;
-        this->y *= d;
+        double v1 = this->x*d;
+        double v2 = this->y*d;
+        this->x = (abs(v1) < tolerance) ? 0 : v1;
+        this->y = (abs(v2) < tolerance) ? 0 : v2;
+        return *this;
+    }
+
+    ComplexD operator /(const ComplexD& z2) {
+        // ComplexD z2barre = conj(z2);
+        // double d = (z2*z2barre).x;
+        // double v1 = (this->x*z2barre.x - this->y*z2barre.y)/d;
+        // double v2 = (this->x*z2barre.y + this->y*z2barre.x)/d;
+        // this->x = (abs(v1) < tolerance) ? 0 : v1;
+        // this->y = (abs(v2) < tolerance) ? 0 : v2;
         return *this;
     }
 
     ComplexD operator /(const double& d) {
-        return ComplexD(this->x/d, this->y/d);
+        double v1 = this->x/d;
+        double v2 = this->y/d;
+        return ComplexD((abs(v1) < tolerance) ? 0 : v1, 
+                        (abs(v2) < tolerance) ? 0 : v2);
     }
         
     ComplexD operator /=(const double& d) {
-        this->x /= d;
-        this->y /= d;
+        double v1 = this->x/d;
+        double v2 = this->y/d;
+        this->x = (abs(v1) < tolerance) ? 0 : v1;
+        this->y = (abs(v2) < tolerance) ? 0 : v2;
         return *this;
     }
 
@@ -145,6 +195,77 @@ std::vector<ComplexD> operator * (double d, std::vector<ComplexD>& V) {
     
     return V;
 }
+
+
+
+
+//     ComplexD operator * (const ComplexD& z2) {
+//         ComplexD z1 = *this;
+//         return ComplexD(z1.x * z2.x - z1.y * z2.y, z1.y*z2.x + z2.y*z1.x);
+//     }
+
+//     ComplexD operator * (const ComplexD& z2) const {
+//         ComplexD z1 = *this;
+//         return ComplexD(z1.x * z2.x - z1.y * z2.y, z1.y*z2.x + z2.y*z1.x);
+//     }
+
+
+//     ComplexD operator *= (const ComplexD& z2) {
+//         double tmp = this->x;
+//         this->x = this->x * z2.x - this->y * z2.y;
+//         this->y = tmp * z2.y + this->y * z2.x;
+//         return *this;
+
+//         // (a+ib) * (x+iy) = ax -by + i[ay + bx]
+//     }
+    
+//     ComplexD operator * (const double& d) {
+//         return ComplexD(d*this->x, d*this->y);
+//     }
+        
+//     ComplexD operator *= (const double& d) {
+//         this->x *= d;
+//         this->y *= d;
+//         return *this;
+//     }
+
+//     ComplexD operator / (const double& d) {
+//         return ComplexD(this->x/d, this->y/d);
+//     }
+        
+//     ComplexD operator /= (const double& d) {
+//         this->x /= d;
+//         this->y /= d;
+//         return *this;
+//     }
+
+//     ComplexD operator ^ (const double& d) {
+//         ComplexD res = ComplexD(1,0);
+//         for (std::size_t i = 0; i < d; ++i) {
+//             res *= (*this);
+//         }
+//         *this = res;
+//         return *this;
+//     }
+// };
+
+// ostream& operator << (ostream& o, const ComplexD& z) {
+//     o << z.x << " + i* " << z.y;
+//     return o;
+// }
+
+// ComplexD conj(ComplexD z) {
+//     /* Return the conjugate of a complex number. */
+//     return ComplexD(z.x, -z.y);
+// }
+
+// std::vector<ComplexD> operator * (double d, std::vector<ComplexD>& V) {    
+//     for (std::size_t i = 0; i < V.size(); ++i) {
+//         V[i] = V[i] * d;
+//     }
+    
+//     return V;
+// }
 
 
 
