@@ -99,10 +99,13 @@ size_t next_power_of_two(size_t n) {
 }
 
 
-vector<ComplexD> FFT(const vector<ComplexD>& P) {
-    /* FFT of P. */
-    // std::size_t size = next_power_of_two(P.size());
-    // std::vector<double> 
+
+vector<ComplexD> FFT(vector<ComplexD>& P) {
+    /* Computes the FFT of P
+    Converts P into a polynomial of size power of two.
+    */
+    size_t size = next_power_of_two(P.size());
+    P.resize(size);
     // Get the primitive root.
     ComplexD prim_root = get_prim_root(P.size());
     // cout << "PRIM ROOT:" << prim_root << endl;
@@ -112,6 +115,21 @@ vector<ComplexD> FFT(const vector<ComplexD>& P) {
     vector<ComplexD> res = FFT_rec(P, roots, 1);
     return res;
 }
+
+
+// vector<ComplexD> FFT(const vector<ComplexD>& P) {
+//     /* FFT of P. */
+//     // std::size_t size = next_power_of_two(P.size());
+//     // std::vector<double> 
+//     // Get the primitive root.
+//     ComplexD prim_root = get_prim_root(P.size());
+//     // cout << "PRIM ROOT:" << prim_root << endl;
+
+//     // Get the list of primitive to the power from 0 to n-1.
+//     vector<ComplexD> roots = get_roots(prim_root, P.size());
+//     vector<ComplexD> res = FFT_rec(P, roots, 1);
+//     return res;
+// }
 
 vector<ComplexD> IFFT(const vector<ComplexD>& P) {
     /* IFFT of P. */

@@ -28,6 +28,6 @@ This project can be done as groups of three. In that case, the names of all stud
 // Avancee :
 
 - Benchmark OK
-- Jeu de test pour l'arithmétique des complexes début
-- Rapport début(FFT et IFFT)
-- Corriger FFT pour agrandir les vecteurs de taille non puissance de 2
+- Corriger FFT pour agrandir les vecteurs de taille non puissance de 2 OK
+- Jeu de test pour l'arithmétique des complexes OK
+- Vérifer rapport

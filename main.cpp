@@ -12,8 +12,8 @@
 
 #define MAX_R 4294967296
 
-#define VALID "\x1B[32mVALID\033[0m"
-#define INVALID "\x1B[31mINVALID\033[0m"
+#define VALID "\x1B[32m[VALID]\033[0m"
+#define INVALID "\x1B[31m[INVALID]\033[0m"
 
 using namespace std;
 
@@ -47,41 +47,52 @@ tuple<double, double> benchmark_poly_mult(size_t size) {
 int main(){
 
     const int TEST1 = 1;
-    const int TEST2 = 0;
-    const int TEST3 = 0;
-    const int TEST4 = 0;
-    const int TEST5 = 1;
+    const int TEST2 = 1;
+    const int TEST3 = 1;
+    const int TEST4 = 1;
+    const int TEST5 = 0;
     const int TEST6 = 0;
 
 
     if (TEST1){
         cout << "### Test opérations arithmétiques ###\n";
-        ComplexD z(0, 1);
-        ComplexD z2(z);
-        ComplexD z3 = z2;
+        ComplexD z0 = ComplexD();
+        ComplexD z1(1, 1);
+        ComplexD z2(1, 0);
+        ComplexD z3(0, 4);
+        ComplexD z4(z1);
+        ComplexD z5 = z2;
 
         // Testing +, *, +=, *=
-        cout << "z\t=  "    << z    << " :\t";
-        cout << ((z.x == 0 && z.y == 1) ? VALID : INVALID) << endl;
-        cout << "z2\t=  "   << z2   << " :\t";
-        cout << ((z2.x == 0 && z2.y == 1) ? VALID : INVALID) << endl;
-        cout << "z3\t=  "   << z3   << " :\t";
-        cout << ((z3.x == 0 && z3.y == 1) ? VALID : INVALID) << endl;
-        cout << "z + z2\t=  " << z+z2 << " :\t";
-        cout << (((z+z2).x == 0 && (z+z2).y == 2) ? VALID : INVALID) << endl;
-        cout << "z += z2\t=  " << (z+=z2) << " :\t";
-        cout << ((z.x == 0 && z.y == 2) ? VALID : INVALID) << endl;
-        cout << "z - z2\t=  " << z-z2 << " :\t";
-        cout << (((z-z2).x == 0 && (z-z2).y == 1) ? VALID : INVALID) << endl;
-        cout << "z -= z2\t=  " << (z-=z2) << " :\t";
-        cout << ((z.x == 0 && z.y == 1) ? VALID : INVALID) << endl;
-        cout << "z * z2\t= " << z*z2 << " :\t";
-        cout << (((z*z2).x == -1 && (z*z2).y == 0) ? VALID : INVALID) << endl;
-        cout << "z *= z2\t= " << (z*=z2) << " :\t";
-        cout << ((z.x == -1 && z.y == 0) ? VALID : INVALID) << endl;
-        cout << "z2 / z\t= " << z2/z << " :\t";
-        cout << (((z2/z).x == -1 && (z2/z).y == 0) ? VALID : INVALID) << endl;
-
+        cout << "Constructeur :\t" << ((z1.x == 1 && z1.y == 1) ? VALID : INVALID) << endl;
+        cout << "Constr. vide :\t" << ((z0.x == 0 && z0.y == 0) ? VALID : INVALID) << endl;
+        cout << "Copie    :\t" << ((z4.x == z1.x && z4.y == z1.y) ? VALID : INVALID) << endl;
+        cout << " =       :\t" << ((z5.x == z2.x && z5.y == z2.y) ? VALID : INVALID) << endl;
+        cout << " +(int)  :\t" << (((z5+4).x == 5 && (z5+4).y == 0) ? VALID : INVALID) << endl;
+        cout << " +       :\t" << (((z1+z2).x == 2 && (z1+z2).y == 1) ? VALID : INVALID) << endl;
+        z5 += 4;
+        cout << " +=(int) :\t" << ((z5.x == 5 && z5.y == 0) ? VALID : INVALID) << endl;
+        z1 += z2;
+        cout << " +=      :\t" << ((z1.x == 2 && z1.y == 1) ? VALID : INVALID) << endl;
+        cout << " -(int)  :\t" << (((z5-4).x == 1 && (z5-4).y == 0) ? VALID : INVALID) << endl;
+        cout << " -       :\t" << (((z1-z3).x == 2 && (z1-z3).y == -3) ? VALID : INVALID) << endl;
+        z5 -= 4;
+        cout << " -=(int) :\t" << ((z5.x == 1 && z5.y == 0) ? VALID : INVALID) << endl;
+        z1 -= z3;
+        cout << " -=      :\t" << ((z1.x == 2 && z1.y == -3) ? VALID : INVALID) << endl;
+        cout << " *(int)  :\t" << (((z3*2).x == 0 && (z3*2).y == 8) ? VALID : INVALID) << endl;
+        cout << " *       :\t" << (((z1*z3).x == 12 && (z1*z3).y == 8) ? VALID : INVALID) << endl;
+        z2 *= 3;
+        cout << " *=(int) :\t" << ((z2.x == 3 && z2.y == 0) ? VALID : INVALID) << endl;
+        z1 *= z3;
+        cout << " *=      :\t" << ((z1.x == 12 && z1.y == 8) ? VALID : INVALID) << endl;
+        cout << " /(int)  :\t" << (((z2/2).x == 1.5 && (z2/2).y == 0) ? VALID : INVALID) << endl;
+        cout << " /       :\t" << (((z3/z1).x == (double)32/208 && (z3/z1).y == (double)48/208) ? VALID : INVALID) << endl;
+        z2 /= 2;
+        cout << " /=(int) :\t" << ((z2.x == 1.5 && z2.y == 0) ? VALID : INVALID) << endl;
+        z3 /= z1;
+        cout << " /=      :\t" << ((z3.x == (double)32/208 && z3.y == (double)48/208) ? VALID : INVALID) << endl;
+        cout << endl;
     }
 
     if (TEST2){
@@ -111,10 +122,10 @@ int main(){
         // ComplexD z1(4, 0);
         // vector<ComplexD> V = {z0, z1};
 
-
+        cout << "### Test FFT ###\n";
         cout << "V:" << endl;
         for (size_t i = 0; i < V.size(); i++){
-            cout << V[i] << endl;
+            cout << V[i] << "\t";
         }
         cout << endl;
 
@@ -124,10 +135,9 @@ int main(){
 
         cout << "FFT of V:" << endl;
         for (std::size_t i = 0; i < res.size(); i++){
-            cout << res[i] << endl;
+            cout << res[i] << "\t";
         }
-        cout << endl;
-    
+        cout << endl << endl;
     
     }
 
@@ -137,46 +147,23 @@ int main(){
         ComplexD z3(1, 0);
         ComplexD z4(1, 0);
         vector<ComplexD> V = {z1, z2, z3, z4};
-        
 
-        // ComplexD z1(0.25, 0);
-        // ComplexD z2(0.25, 0);
-        // ComplexD z3(0.25, 0);
-        // ComplexD z4(0.25, 0);
-        // vector<ComplexD> V = {z1, z2, z3, z4};
-
-        // ComplexD z0(3, 0);
-        // ComplexD z1(4, 0);
-        // ComplexD z2(6, 0);
-        // ComplexD z3(2, 0);
-        // ComplexD z4(1, 0);
-        // ComplexD z5(10, 0);
-        // vector<ComplexD> V = {z0, z1, z2, z3, z4, z5};
-
-        // ComplexD z0(3, 0);
-        // ComplexD z1(4, 0);
-        // vector<ComplexD> V = {z0, z1};
-
-
+        cout << "### Test Inverse FFT ###\n";
         cout << "V:" << endl;
         for (std::size_t i = 0; i < V.size(); i++) {
             cout << V[i] << "\t";
         }
         cout << endl;
 
-        // cout << "Step1" << endl;
         ComplexD root(0, -1);  // root = i
-        // cout << "Step2" << endl;
-
         vector<ComplexD> res = IFFT(V);
-        // cout << "Step3" << endl;
         
 
         cout << "IFFT of V:" << endl;
         for (size_t i = 0; i < res.size(); i++) {
             cout << res[i] << "\t";
         }
-        cout << endl;
+        cout << endl << endl;
     }
 
 
@@ -199,6 +186,8 @@ int main(){
         ComplexD y5(10, 0);
         vector<ComplexD> V2 = {y0, y1, y2, y3};
 
+        cout << "### Test produit polynomes ###\n";
+
         cout << "Polynomial 1:" << endl;
         for (std::size_t i = 0; i < V1.size(); i++) {
             cout << V1[i] << "\t";
@@ -209,31 +198,30 @@ int main(){
         for (std::size_t i = 0; i < V2.size(); i++) {
             cout << V2[i] << "\t";
         }
-        cout << endl;
+        cout << endl << endl;
 
 
         vector<ComplexD> res_naif = naive_mult(V1, V2);
         vector<ComplexD> res_FFT = FFT_mult(V1, V2);
         
-        char *color = (char *)INVALID;
-        if (verif_poly(res_naif, res_FFT))
-            color = (char *)VALID;
-        printf("TEST 4 : %s\n", color);
         
-
         cout << "Naive mult of V1 and V2:" << endl;
         for (std::size_t i = 0; i < res_naif.size(); ++i) {
             cout << res_naif[i] << "\t";
         }
-        cout << endl << endl;
-
-        
+        cout << endl;
 
         cout << "FFT mult of V1 and V2:" << endl;
         for (std::size_t i = 0; i < res_FFT.size(); ++i) {
             cout << res_FFT[i] << "\t";
         }
-        cout << endl;
+        cout << endl << endl;
+
+        char *color = (char *)INVALID;
+        if (verif_poly(res_naif, res_FFT))
+            color = (char *)VALID;
+        cout << "Produit de polynomes avec FFT : " << color << endl << endl;
+        
     }
 
     if (TEST5){
@@ -251,8 +239,10 @@ int main(){
         }
 
 
-        vector<size_t> Plot = {1, 2, 4, 8, 16, 32, 64 ,128,\
-                               256, 1024, 2048, 8192, 16384};
+        // vector<size_t> Plot = {1, 2, 4, 8, 16, 32, 64 ,128, 256, 1024, 2048, 8192, 16384};
+        vector<size_t> Plot = {32, 64 , 128, 256, 1024, 2048, 8192, 16384, 32768, 65536};
+        cout << "Plot size = " << Plot.size() << endl;
+
         for (size_t i = 0; i < Plot.size(); i++){
             size_t size = Plot[i];
             tuple<double, double> time = benchmark_poly_mult(size);
@@ -288,7 +278,7 @@ int main(){
         char *color = (char *)INVALID;
         if (verif_poly(res_naif, res_FFT))
             color = (char *)VALID;
-        printf("TEST 6 : %s\n", color);
+        cout << "TEST 6 : " <<  color << endl;
     }
 
     return 0;

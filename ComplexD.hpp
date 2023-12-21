@@ -49,6 +49,11 @@ public:
         return b;
     }
 
+    friend ComplexD conj(ComplexD z) {
+        /* Return the conjugate of a complex number. */
+        return ComplexD(z.x, -z.y);
+    }
+
     ComplexD operator + (const ComplexD& z2) {
         ComplexD z = ComplexD();
         z.x = (abs(x + z2.x) < tolerance) ? 0 : x + z2.x;
@@ -144,12 +149,23 @@ public:
     }
 
     ComplexD operator /(const ComplexD& z2) {
-        // ComplexD z2barre = conj(z2);
-        // double d = (z2*z2barre).x;
-        // double v1 = (this->x*z2barre.x - this->y*z2barre.y)/d;
-        // double v2 = (this->x*z2barre.y + this->y*z2barre.x)/d;
-        // this->x = (abs(v1) < tolerance) ? 0 : v1;
-        // this->y = (abs(v2) < tolerance) ? 0 : v2;
+        ComplexD res = ComplexD();
+        ComplexD z2barre = conj(z2);
+        double d = (z2*z2barre).x;
+        double v1 = (this->x*z2barre.x - this->y*z2barre.y)/d;
+        double v2 = (this->x*z2barre.y + this->y*z2barre.x)/d;
+        res.x = (abs(v1) < tolerance) ? 0 : v1;
+        res.y = (abs(v2) < tolerance) ? 0 : v2;
+        return res;
+    }
+
+    ComplexD operator /=(const ComplexD& z2) {
+        ComplexD z2barre = conj(z2);
+        double d = (z2*z2barre).x;
+        double v1 = (this->x*z2barre.x - this->y*z2barre.y)/d;
+        double v2 = (this->x*z2barre.y + this->y*z2barre.x)/d;
+        this->x = (abs(v1) < tolerance) ? 0 : v1;
+        this->y = (abs(v2) < tolerance) ? 0 : v2;
         return *this;
     }
 
@@ -181,11 +197,6 @@ public:
 ostream& operator <<(ostream& o, const ComplexD& z) {
     o << z.x << " + i* " << z.y;
     return o;
-}
-
-ComplexD conj(ComplexD z) {
-    /* Return the conjugate of a complex number. */
-    return ComplexD(z.x, -z.y);
 }
 
 std::vector<ComplexD> operator * (double d, std::vector<ComplexD>& V) {    
