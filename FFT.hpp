@@ -75,7 +75,7 @@ vector<ComplexD> FFT_rec(const vector<ComplexD>& P, const vector<ComplexD>& root
     vector<ComplexD> FFT_Pe = FFT_rec(Pe, roots, step*2);
     vector<ComplexD> FFT_Po = FFT_rec(Po, roots, step*2);
 
-    // Evaluations.
+    // Evaluations
     for (std::size_t i = 0; i < P.size()/2; ++i) {
         ComplexD root = roots[i*step]; // Omega^i
         res[i] = FFT_Pe[i] + root * FFT_Po[i];
@@ -108,7 +108,6 @@ vector<ComplexD> FFT(vector<ComplexD>& P) {
     P.resize(size);
     // Get the primitive root.
     ComplexD prim_root = get_prim_root(P.size());
-    // cout << "PRIM ROOT:" << prim_root << endl;
 
     // Get the list of primitive to the power from 0 to n-1.
     vector<ComplexD> roots = get_roots(prim_root, P.size());
@@ -116,27 +115,11 @@ vector<ComplexD> FFT(vector<ComplexD>& P) {
     return res;
 }
 
-
-// vector<ComplexD> FFT(const vector<ComplexD>& P) {
-//     /* FFT of P. */
-//     // std::size_t size = next_power_of_two(P.size());
-//     // std::vector<double> 
-//     // Get the primitive root.
-//     ComplexD prim_root = get_prim_root(P.size());
-//     // cout << "PRIM ROOT:" << prim_root << endl;
-
-//     // Get the list of primitive to the power from 0 to n-1.
-//     vector<ComplexD> roots = get_roots(prim_root, P.size());
-//     vector<ComplexD> res = FFT_rec(P, roots, 1);
-//     return res;
-// }
-
 vector<ComplexD> IFFT(const vector<ComplexD>& P) {
     /* IFFT of P. */
 
     // Get the primitive root.
     ComplexD prim_root = conj(get_prim_root(P.size()));
-    // cout << "PRIM ROOT:" << prim_root << endl;
 
     // Get the list of primitive to the power from 0 to n-1.
     vector<ComplexD> roots = get_roots(prim_root, P.size());

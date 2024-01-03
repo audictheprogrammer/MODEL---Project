@@ -102,42 +102,26 @@ int main(){
         ComplexD z4(1, 0);
         ComplexD z5(1, 0);
         vector<ComplexD> V = {z1, z2, z3, z4};
-        // vector<ComplexD> V = {z1, z2, z3, z4, z5};
-
-        // ComplexD z1(0.25, 0);
-        // ComplexD z2(0.25, 0);
-        // ComplexD z3(0.25, 0);
-        // ComplexD z4(0.25, 0);
-        // vector<ComplexD> V = {z1, z2, z3, z4};
-
-        // ComplexD z0(3, 0);
-        // ComplexD z1(4, 0);
-        // ComplexD z2(6, 0);
-        // ComplexD z3(2, 0);
-        // ComplexD z4(1, 0);
-        // ComplexD z5(10, 0);
-        // vector<ComplexD> V = {z0, z1, z2, z3, z4, z5};
-
-        // ComplexD z0(3, 0);
-        // ComplexD z1(4, 0);
-        // vector<ComplexD> V = {z0, z1};
 
         cout << "### Test FFT ###\n";
+
+        ComplexD root(0, 1);  // root = i
+
+        vector<ComplexD> res = FFT(V);
+
+
         cout << "V:" << endl;
         for (size_t i = 0; i < V.size(); i++){
             cout << V[i] << "\t";
         }
         cout << endl;
 
-        ComplexD root(0, 1);  // root = i
-
-        vector<ComplexD> res = FFT(V);
-
         cout << "FFT of V:" << endl;
         for (std::size_t i = 0; i < res.size(); i++){
             cout << res[i] << "\t";
         }
-        cout << endl << endl;
+        cout << endl;
+        cout << ((res[0] == 4 && res[1] == 0 && res[2] == 0 && res[3] == 0) ? VALID : INVALID) << endl << endl;
     
     }
 
@@ -163,7 +147,8 @@ int main(){
         for (size_t i = 0; i < res.size(); i++) {
             cout << res[i] << "\t";
         }
-        cout << endl << endl;
+        cout << endl << ((res[0] == 1 && res[1] == 0 && res[2] == 0 && res[3] == 0) ? VALID : INVALID) << endl << endl;
+
     }
 
 
