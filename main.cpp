@@ -44,17 +44,93 @@ tuple<double, double> benchmark_poly_mult(size_t size) {
 
 
 
-int main(){
+int main(int argc, char* argv[]){
 
-    const int TEST1 = 1;
-    const int TEST2 = 1;
-    const int TEST3 = 1;
-    const int TEST4 = 1;
-    const int TEST5 = 0;
-    const int TEST6 = 0;
+    int TEST1 = 1;  // arithmetic operations
+    int TEST2 = 1;  // FFT
+    int TEST3 = 1;  // IFFT
+    int TEST4 = 1;  // polynom multiplication with FFT
+    int TEST5 = 0;  // Compare the execution time between FFT and naive multiplication
+    int TEST6 = 0;  // Check validity of both Poly mult.
 
+    std::cout << "Do you want to use your own polynomials to test the FFT multiplication method ?\n"
+                "Otherwise our prepared set of tests will be launched.\n [y/n] ";
+    char answer[1];
+    std::cin >> answer;
+    if (answer[0] == 'y') { 
+        TEST1 = 0;
+        TEST2 = 0;
+        TEST3 = 0;
+        TEST4 = 0;
+        TEST5 = 0;
+        TEST6 = 0;
+        
+        int size;
+        double real;
+        double imag;
 
-    if (TEST1){
+        std::cout << "Please select the size of your first polynomial.\n";
+        std::cin >> size;
+        vector<ComplexD> P(size);
+        std::cout << "Enter the real part, then the imaginary part.\n";
+        
+        for (int i = 0; i < size; ++i) {
+            std::cout << "P[" << i << "] = ";
+            std::cin >> real;
+            std::cin >> imag;
+            std::cout << std::endl;
+            P[i] = ComplexD(real, imag);
+        }
+    
+        std::cout << "Please select the size of your second polynomial.\n";
+        std::cin >> size;
+        vector<ComplexD> Q(size);
+        std::cout << "Enter the real part, then the imaginary part.\n";
+
+        for (int i = 0; i < size; ++i) {
+            std::cout << "Q[" << i << "] = ";
+            std::cin >> real;
+            std::cin >> imag;
+            std::cout << std::endl;
+            Q[i] = ComplexD(real, imag);
+        }
+        
+        cout << "Polynomial 1:" << endl;
+        for (std::size_t i = 0; i < P.size(); i++) {
+            cout << P[i] << "\t";
+        }
+        cout << endl;
+
+        cout << "Polynomial 2:" << endl;
+        for (std::size_t i = 0; i < Q.size(); i++) {
+            cout << Q[i] << "\t";
+        }
+        cout << endl << endl;
+
+        vector<ComplexD> res_naif = naive_mult(P, Q);
+        vector<ComplexD> res_FFT = FFT_mult(P, Q);
+        
+        
+        cout << "Naive mult of V1 and V2:" << endl;
+        for (std::size_t i = 0; i < res_naif.size(); ++i) {
+            cout << res_naif[i] << "\t";
+        }
+        cout << endl;
+        
+        cout << "FFT mult of V1 and V2:" << endl;
+        for (std::size_t i = 0; i < res_FFT.size(); ++i) {
+            cout << res_FFT[i] << "\t";
+        }
+        cout << endl;
+
+        char *color = (char *)INVALID;
+        if (verif_poly(res_naif, res_FFT))
+            color = (char *)VALID;
+        cout << "Polynom multiplication : " <<  color << endl;        
+
+    }
+    
+    if (TEST1) {
         cout << "### Test opérations arithmétiques ###\n";
         ComplexD z0 = ComplexD();
         ComplexD z1(1, 1);

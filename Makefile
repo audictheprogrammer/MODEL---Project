@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall
 TARGET = main
-SOURCE = main.cpp
+SOURCE = src/main.cpp
 
 all: $(TARGET)
 
